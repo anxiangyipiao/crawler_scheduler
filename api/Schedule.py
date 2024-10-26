@@ -15,6 +15,7 @@ scheduler = BackgroundScheduler()
 # 启动调度器
 scheduler.start()
 
+
 @ScheduleRouter.post("/add_task", response_model=ScheduledTaskModel)
 def add_task(task: ScheduledTaskModel):
     """
@@ -29,6 +30,7 @@ def add_task(task: ScheduledTaskModel):
     task.next_run_time = job.next_run_time  # 更新下次运行时间
     task.status = "running"  # 更新任务状态
     return task
+
 
 @ScheduleRouter.get("/list_tasks", response_model=List[ScheduledTaskModel])
 def list_tasks():
