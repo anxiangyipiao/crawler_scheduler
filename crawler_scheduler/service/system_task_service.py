@@ -1,18 +1,26 @@
 # -*- coding: utf-8 -*-
 """
 @File    : system_task_service.py
-@Date    : 2024-04-01
+@Date    : 2024-07-13
 """
 from apscheduler.schedulers.background import BackgroundScheduler
 
-from spider_admin_pro.model.base import db
-from spider_admin_pro.service.schedule_service import ScheduleService
-from spider_admin_pro.service.stats_collection_service import StatsCollectionService
-from spider_admin_pro.logger import logger
+from crawler_scheduler.model.base import db
+from crawler_scheduler.service.schedule_service import ScheduleService
+from crawler_scheduler.service.stats_collection_service import StatsCollectionService
 
 
 def start_system_scheduler():
-    logger.info("system_scheduler start")
+    """
+    启动系统调度器。
+    
+    Args:
+        无
+    
+    Returns:
+        无
+    
+    """
 
     scheduler = BackgroundScheduler()
 
