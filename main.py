@@ -1,7 +1,7 @@
 # main.py
 
 from fastapi import Depends, FastAPI,Request
-from crawler_scheduler.api import auth_api,scrapyd_api
+from crawler_scheduler.api import auth_api,scrapyd_api,system_api
 from fastapi.responses import JSONResponse
 from crawler_scheduler.service.auth_service import AuthService
 
