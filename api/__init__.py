@@ -2,4 +2,4 @@
 
 from .ScrapydManager import ScrapydRouter
 from .User import UserRouter
-from .Schedule import ScheduleRouter
+from ..schedule.Schedule import ScheduleRouter

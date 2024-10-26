@@ -4,8 +4,6 @@ from fastapi import APIRouter, HTTPException
 from model.model import ScrapydClienModel
 from utils import redis_client
 
-
-
 ScrapydRouter = APIRouter()
 
 # 上传 Scrapyd 地址到 Redis 的接口
@@ -52,3 +50,5 @@ def delete_scrapyd_client(client: ScrapydClienModel):
     if not result:
         raise HTTPException(status_code=404, detail="Scrapyd client not found")
     return {"message": "Scrapyd client deleted successfully"}
+
+
