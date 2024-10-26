@@ -4,13 +4,13 @@
 行为历史模块
 """
 
-from fastapi import FastAPI, Request, HTTPException, Depends
+from fastapi import APIRouter, Request, Depends
 from crawler_scheduler.service.action_history_service import ActionHistoryService,login_history_wrap
 from crawler_scheduler.service.auth_service import AuthService
 from crawler_scheduler.model.request_model import LoginHistoryParams
 
 
-auth_api = FastAPI()
+auth_api = APIRouter()
 
 
 

@@ -2,8 +2,11 @@
 
 from fastapi import FastAPI
 from crawler_scheduler.api import auth_api,scrapyd_api
+from fastapi.responses import JSONResponse
 
-app = FastAPI()
+
+
+app = FastAPI(default_response_class=JSONResponse)
 
 # 包含 API 路由
 app.include_router(auth_api, tags=["auth_api"])
