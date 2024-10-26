@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+
+from fastapi import Request, HTTPException
+from fastapi.responses import JSONResponse
 from functools import wraps
 
-from flask import request
 from ip_area import get_info
 from user_agents import parse
 
@@ -10,33 +12,35 @@ from crawler_scheduler.model.login_history_model import LoginHistoryModel
 
 
 def login_history_wrap(func):
-    """登录日志"""
-
+    """登录日志装饰器"""
+    
     @wraps(func)
-    def decorator(*args, **kwargs):
-
+    async def decorator(request: Request, *args, **kwargs):
         try:
-            res = func(*args, **kwargs)
+            res = await func(request, *args, **kwargs)
             result = True
-        except ApiException as e:
-            res = e
+        except (ApiException, HTTPException) as e:
+            res = {"message": str(e)}
             result = False
-
-        username = request.json['username']
+        
+        username = request.headers.get('username', '')  # 假设用户名通过请求头传递
+        user_agent = request.headers.get('user-agent', '')
+        remote_addr = request.client.host
 
         ActionHistoryService.login_history(
             username=username,
-            user_agent=request.user_agent.string,
-            remote_addr=request.remote_addr,
+            user_agent=user_agent,
+            remote_addr=remote_addr,
             result=result
         )
-
+        
         if result:
             return res
         else:
-            raise res
+            return JSONResponse(status_code=e.status_code if isinstance(e, HTTPException) else 500, content=res)
 
     return decorator
+
 
 
 class ActionHistoryService(object):
