@@ -128,3 +128,32 @@ class RemoveScheduleLogsRequest(BaseModel):
     spider: Optional[str] = None
     schedule_job_id: Optional[str] = None
     scrapyd_server_id: Optional[int] = None
+
+
+
+# 定义请求模型
+class AddItemRequest(BaseModel):
+    job_id: str
+    project: str
+    spider: str
+    item_scraped_count: int
+    item_dropped_count: int
+    start_time: str
+    finish_time: str
+    duration: float
+    finish_reason: str
+    log_error_count: int
+
+class ListItemRequest(BaseModel):
+    page: Optional[int] = 1
+    size: Optional[int] = 20
+    project: Optional[str] = None
+    spider: Optional[str] = None
+    order_prop: Optional[str] = None
+    order_type: Optional[str] = None
+    scrapyd_server_id: Optional[int] = None
+
+class DeleteRequest(BaseModel):
+    project: Optional[str] = None
+    spider: Optional[str] = None
+    scrapyd_server_id: Optional[int] = None

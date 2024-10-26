@@ -3,31 +3,34 @@
 """
 spider运行结果数据收集模块
 """
+
 from pprint import pprint
 
 
 from crawler_scheduler.model.stats_collection_model import StatsCollectionModel
 from crawler_scheduler.service import schedule_history_service
 from crawler_scheduler.service.stats_collection_service import StatsCollectionService
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter
+from crawler_scheduler.model.request_model import AddItemRequest, ListItemRequest, DeleteRequest
 
 stats_collection_api = APIRouter()
 
 
-@stats_collection_api.post('/addItem')
-def add_item():
-    pprint(request.json)
+# 添加数据项
+@stats_collection_api.post("/addItem")
+def add_item(req: AddItemRequest):
+    pprint(req.dict())
 
-    spider_job_id = request.json['job_id']
-    project = request.json['project']
-    spider = request.json['spider']
-    item_scraped_count = request.json['item_scraped_count']
-    item_dropped_count = request.json['item_dropped_count']
-    start_time = request.json['start_time']
-    finish_time = request.json['finish_time']
-    duration = request.json['duration']
-    finish_reason = request.json['finish_reason']
-    log_error_count = request.json['log_error_count']
+    spider_job_id = req.job_id
+    project = req.project
+    spider = req.spider
+    item_scraped_count = req.item_scraped_count
+    item_dropped_count = req.item_dropped_count
+    start_time = req.start_time
+    finish_time = req.finish_time
+    duration = req.duration
+    finish_reason = req.finish_reason
+    log_error_count = req.log_error_count
 
     # 查询 scrapyd_server_id
     schedule_history_row = schedule_history_service.get_schedule_history_service_by_job_id(spider_job_id=spider_job_id)
@@ -49,18 +52,18 @@ def add_item():
         log_error_count=log_error_count,
         duration=duration
     )
+    return {"message": "数据项添加成功"}
 
-
-@stats_collection_api.post('/listItem')
-def list_item():
-    page = request.json.get("page", 1)
-    size = request.json.get("size", 20)
-    project = request.json.get("project")
-    spider = request.json.get("spider")
-
-    order_prop = request.json.get("order_prop")
-    order_type = request.json.get("order_type")  # descending, ascending
-    scrapyd_server_id = request.json.get("scrapydServerId")
+# 列出数据项
+@stats_collection_api.post("/listItem")
+def list_item(req: ListItemRequest):
+    page = req.page
+    size = req.size
+    project = req.project
+    spider = req.spider
+    order_prop = req.order_prop
+    order_type = req.order_type
+    scrapyd_server_id = req.scrapyd_server_id
 
     return {
         'list': StatsCollectionService.list(
@@ -72,15 +75,16 @@ def list_item():
         'total': StatsCollectionService.count(project=project, spider=spider)
     }
 
-
-@stats_collection_api.post('/delete')
-def delete():
-    project = request.json.get("project")
-    spider = request.json.get("spider")
-    scrapyd_server_id = request.json.get("scrapydServerId")
+# 删除数据项
+@stats_collection_api.post("/delete")
+def delete(req: DeleteRequest):
+    project = req.project
+    spider = req.spider
+    scrapyd_server_id = req.scrapyd_server_id
 
     StatsCollectionService.delete(
         project=project,
         scrapyd_server_id=scrapyd_server_id,
         spider=spider
     )
+    return {"message": "数据项删除成功"}
