@@ -5,17 +5,14 @@
 """
 
 from fastapi import FastAPI, Request, HTTPException, Depends
-from pydantic import BaseModel
-from typing import List, Optional
 from crawler_scheduler.service.action_history_service import ActionHistoryService,login_history_wrap
 from crawler_scheduler.service.auth_service import AuthService
+from crawler_scheduler.model.request_model import LoginHistoryParams
+
 
 User = FastAPI()
 
-# 定义请求体模型
-class LoginHistoryParams(BaseModel):
-    page: Optional[int] = 1
-    size: Optional[int] = 20
+
 
 
 @User.post('/loginHistoryList')

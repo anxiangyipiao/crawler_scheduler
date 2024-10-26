@@ -4,15 +4,14 @@ from typing import Optional, List
 
 
 
+# login_api 请求体模型
+class LoginHistoryParams(BaseModel):
+    page: Optional[int] = 1
+    size: Optional[int] = 20
 
 
 
-
-
-
-
-
-# 请求体模型
+# scrapyd_api 请求体模型
 class DaemonStatusRequest(BaseModel):
     scrapydServerId: int
 
