@@ -4,93 +4,69 @@
 @Date    : 2024-07-13
 """
 
-from flask import request
+from crawler_scheduler.model.scrapyd_server_model import ScrapydServerModel
+from fastapi import APIRouter
+from crawler_scheduler.model.request_model import AddScrapydServerRequest, UpdateScrapydServerRequest, UpdateScrapydServerStatusRequest, DeleteScrapydServerRequest, GetScrapydServerRequest
 
-from spider_admin_pro.model.scrapyd_server_model import ScrapydServerModel
-from spider_admin_pro.service.auth_service import AuthService
-from spider_admin_pro.utils.flask_ext.flask_app import BlueprintAppApi
-
-
-scrapyd_server_api = BlueprintAppApi("scrapydServer", __name__)
+scrapyd_server_api = APIRouter()
 
 
-@scrapyd_server_api.before_request
-def before_request():
-    token = request.headers.get('Token')
-    AuthService.check_token(token)
-
-
-@scrapyd_server_api.post('/addScrapydServer')
-def add_scrapyd_server():
-    server_url = request.json['server_url']
-    server_name = request.json['server_name']
-    username = request.json['username']
-    password = request.json['password']
-    status = request.json['status']
-
+# 添加Scrapyd服务器
+@scrapyd_server_api.post("/addScrapydServer")
+def add_scrapyd_server(req: AddScrapydServerRequest):
     ScrapydServerModel.create(
-        server_url=server_url,
-        server_name=server_name,
-        username=username,
-        password=password,
-        status=status,
+        server_url=req.server_url,
+        server_name=req.server_name,
+        username=req.username,
+        password=req.password,
+        status=req.status
     )
+    return {"message": "Scrapyd服务器添加成功"}
 
-
-@scrapyd_server_api.post('/updateScrapydServer')
-def update_scrapyd_server():
-    scrapyd_server_id = request.json['scrapyd_server_id']
-    server_url = request.json['server_url']
-    server_name = request.json['server_name']
-    username = request.json['username']
-    password = request.json['password']
-    status = request.json['status']
-
+# 更新Scrapyd服务器
+@scrapyd_server_api.post("/updateScrapydServer")
+def update_scrapyd_server(req: UpdateScrapydServerRequest):
     ScrapydServerModel.update(
-        server_url=server_url,
-        server_name=server_name,
-        username=username,
-        password=password,
-        status=status,
+        server_url=req.server_url,
+        server_name=req.server_name,
+        username=req.username,
+        password=req.password,
+        status=req.status
     ).where(
-        ScrapydServerModel.id == scrapyd_server_id
+        ScrapydServerModel.id == req.scrapyd_server_id
     ).execute()
+    return {"message": "Scrapyd服务器更新成功"}
 
-
-@scrapyd_server_api.post('/updateScrapydServerStatus')
-def update_scrapyd_server_status():
-    scrapyd_server_id = request.json['scrapyd_server_id']
-    status = request.json['status']
-
+# 更新Scrapyd服务器状态
+@scrapyd_server_api.post("/updateScrapydServerStatus")
+def update_scrapyd_server_status(req: UpdateScrapydServerStatusRequest):
     ScrapydServerModel.update(
-        status=status,
+        status=req.status
     ).where(
-        ScrapydServerModel.id == scrapyd_server_id
+        ScrapydServerModel.id == req.scrapyd_server_id
     ).execute()
+    return {"message": "Scrapyd服务器状态更新成功"}
 
-
-@scrapyd_server_api.post('/deleteScrapydServer')
-def delete_scrapyd_server():
-    scrapyd_server_id = request.json['scrapyd_server_id']
-
+# 删除Scrapyd服务器
+@scrapyd_server_api.post("/deleteScrapydServer")
+def delete_scrapyd_server(req: DeleteScrapydServerRequest):
     ScrapydServerModel.delete().where(
-        ScrapydServerModel.id == scrapyd_server_id
+        ScrapydServerModel.id == req.scrapyd_server_id
     ).execute()
+    return {"message": "Scrapyd服务器删除成功"}
 
+# 获取Scrapyd服务器信息
+@scrapyd_server_api.post("/getScrapydServer")
+def get_scrapyd_server(req: GetScrapydServerRequest):
+    server = ScrapydServerModel.get_by_id(req.scrapyd_server_id)
+    return server
 
-@scrapyd_server_api.post('/getScrapydServer')
-def get_scrapyd_server():
-    scrapyd_server_id = request.json['scrapyd_server_id']
-
-    return ScrapydServerModel.get_by_id(scrapyd_server_id)
-
-
-@scrapyd_server_api.post('/getScrapydServerPage')
+# 获取Scrapyd服务器分页信息
+@scrapyd_server_api.post("/getScrapydServerPage")
 def get_scrapyd_server_page():
     lst = ScrapydServerModel.select()
     total = ScrapydServerModel.select().count()
-
     return {
-        'list': lst,
+        'list': [server for server in lst],
         'total': total
     }

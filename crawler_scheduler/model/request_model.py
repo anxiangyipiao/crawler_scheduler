@@ -20,6 +20,9 @@ class LoginParams(BaseModel):
 class SystemDataRequest(BaseModel):
     scrapydServerId: int
 
+
+
+
 # scrapyd_api 请求体模型
 class DaemonStatusRequest(BaseModel):
     scrapydServerId: int
@@ -131,7 +134,7 @@ class RemoveScheduleLogsRequest(BaseModel):
 
 
 
-# 定义请求模型
+# stats_collection_api 请求模型
 class AddItemRequest(BaseModel):
     job_id: str
     project: str
@@ -157,3 +160,30 @@ class DeleteRequest(BaseModel):
     project: Optional[str] = None
     spider: Optional[str] = None
     scrapyd_server_id: Optional[int] = None
+
+
+# scrapyd_server_api 请求模型
+class AddScrapydServerRequest(BaseModel):
+    server_url: str
+    server_name: str
+    username: str
+    password: str
+    status: str
+
+class UpdateScrapydServerRequest(BaseModel):
+    scrapyd_server_id: int
+    server_url: str
+    server_name: str
+    username: str
+    password: str
+    status: str
+
+class UpdateScrapydServerStatusRequest(BaseModel):
+    scrapyd_server_id: int
+    status: str
+
+class DeleteScrapydServerRequest(BaseModel):
+    scrapyd_server_id: int
+
+class GetScrapydServerRequest(BaseModel):
+    scrapyd_server_id: int
