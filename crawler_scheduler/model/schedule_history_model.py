@@ -7,6 +7,7 @@ from crawler_scheduler.model.base import BaseModel
 
 
 class ScheduleHistoryModel(BaseModel):
+    
     """调度历史存储"""
     id = AutoField(primary_key=True)
 

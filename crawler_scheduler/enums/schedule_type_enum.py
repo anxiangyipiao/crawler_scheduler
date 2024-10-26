@@ -6,6 +6,7 @@
 
 
 class ScheduleTypeEnum(object):
+    
     # 指定一个服务器
     ONLY_ONE_SERVER = '0'
 
