@@ -4,7 +4,7 @@
 行为历史模块
 """
 
-from fastapi import APIRouter, Request, Depends
+from fastapi import APIRouter,Depends
 from crawler_scheduler.service.action_history_service import ActionHistoryService,login_history_wrap
 from crawler_scheduler.service.auth_service import AuthService
 from crawler_scheduler.model.request_model import LoginHistoryParams,LoginParams
@@ -31,10 +31,10 @@ def login_history_list(params: LoginHistoryParams = Depends()):
 
 @auth_api.post('/login')
 @login_history_wrap
-def login(req: LoginParams):
+def login(params: LoginParams):
    
-    username = req.get('username')
-    password = req.get('password')
+    username = params.username
+    password = params.password
 
     return AuthService.login(
         username=username,
