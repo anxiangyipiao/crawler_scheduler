@@ -51,6 +51,8 @@ scheduler = BackgroundScheduler(jobstores=JOBSTORES, job_defaults=JOB_DEFAULTS)
 scheduler.start()
 
 
+# ==============================================
+# 调度器服务
 class ScheduleService(object):
 
     @classmethod
