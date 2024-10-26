@@ -18,8 +18,6 @@ class RedisConnectionManager:
         return Redis(connection_pool=cls.get_pool(db))
     
 
-
-
 # 创建 Redis 连接
 try:
     redis_client = RedisConnectionManager.get_connection(db=1)  # 使用默认数据库

@@ -2,12 +2,12 @@
 import json
 
 from requests.auth import HTTPBasicAuth
-from scrapyd_api import ScrapydClient
+from crawler_scheduler.scrapyd_api import ScrapydClient
 
-from crawler_scheduler import scrapyd_server_service
-from crawl.enums.schedule_type_enum import ScheduleTypeEnum
-from spider_admin_pro.model.schedule_history_model import ScheduleHistoryModel
-from spider_admin_pro.service import scrapyd_server_service
+
+from crawler_scheduler.enums.schedule_type_enum import ScheduleTypeEnum
+from crawler_scheduler.model.schedule_history_model import ScheduleHistoryModel
+from crawler_scheduler.service import scrapyd_server_service
 
 
 def get_client(scrapyd_server_row):
