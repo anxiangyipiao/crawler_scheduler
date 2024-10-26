@@ -32,6 +32,7 @@ def start_system_scheduler():
 
 @db.connection_context()
 def remove_history_log_task():
+    
     """
     移除历史日志，默认保留近7天
     :return:
