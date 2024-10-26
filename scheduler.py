@@ -3,7 +3,7 @@ from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.triggers.cron import CronTrigger
 from scrapyd_api import ScrapydAPI
 from sqlalchemy.orm import Session
-from model import Task, SessionLocal
+from model.model import Task, SessionLocal
 import logging
 
 scrapyd = ScrapydAPI("http://localhost:6800")
