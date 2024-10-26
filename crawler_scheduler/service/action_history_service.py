@@ -11,33 +11,33 @@ from crawler_scheduler.exceptions.api_exception import ApiException
 from crawler_scheduler.model.login_history_model import LoginHistoryModel
 
 
+# 登录日志装饰器
 def login_history_wrap(func):
-    """登录日志装饰器"""
-    
+    """登录日志"""
+
     @wraps(func)
-    async def decorator(request: Request, *args, **kwargs):
+    def decorator(request: Request, *args, **kwargs):
+
         try:
-            res = await func(request, *args, **kwargs)
+            res = func(request, *args, **kwargs)
             result = True
-        except (ApiException, HTTPException) as e:
-            res = {"message": str(e)}
+        except ApiException as e:
+            res = e
             result = False
-        
-        username = request.headers.get('username', '')  # 假设用户名通过请求头传递
-        user_agent = request.headers.get('user-agent', '')
-        remote_addr = request.client.host
+
+        username = kwargs.get('user').username
 
         ActionHistoryService.login_history(
             username=username,
-            user_agent=user_agent,
-            remote_addr=remote_addr,
+            user_agent=request.headers.get('User-Agent'),
+            remote_addr= request.client.host,
             result=result
         )
-        
+
         if result:
             return res
         else:
-            return JSONResponse(status_code=e.status_code if isinstance(e, HTTPException) else 500, content=res)
+            raise res
 
     return decorator
 

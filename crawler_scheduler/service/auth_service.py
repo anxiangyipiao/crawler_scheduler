@@ -57,3 +57,11 @@ class AuthService(object):
     @classmethod
     def decode_token(cls, token):
         return jwt_util.decode(token)
+
+    @classmethod
+    def register(cls, username, password):
+        # 注册用户
+        cls.username = username
+        cls.password = password
+
+        return {'message': '注册成功'}

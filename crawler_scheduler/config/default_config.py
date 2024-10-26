@@ -6,7 +6,7 @@
 
 # 登录账号密码
 BASIC_AUTH_USERNAME = "admin"
-BASIC_AUTH_PASSWORD = ''
+BASIC_AUTH_PASSWORD = '123456'
 
 # BASIC_AUTH_JWT_KEY = secret_util.get_random_secret()
 
