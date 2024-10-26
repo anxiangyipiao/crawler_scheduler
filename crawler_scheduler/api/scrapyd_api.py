@@ -3,10 +3,9 @@
 # scrapyd 接口服务
 # ==============================================
 
+
 from fastapi import FastAPI, Request, HTTPException, Depends
 from fastapi.responses import Response
-from pydantic import BaseModel
-from typing import Optional, List
 from crawler_scheduler.service.auth_service import AuthService
 from crawler_scheduler.model import ScrapydServerModel
 from crawler_scheduler.service.scrapyd_service import get_client, ScrapydService

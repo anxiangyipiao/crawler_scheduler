@@ -3,6 +3,7 @@
 """
 行为历史模块
 """
+
 from fastapi import FastAPI, Request, HTTPException, Depends
 from pydantic import BaseModel
 from typing import List, Optional
