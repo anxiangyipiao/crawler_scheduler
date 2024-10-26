@@ -27,6 +27,17 @@ async def check_token(request: Request, call_next):
 # 定义路由
 @scrapyd_api.post('/daemonStatus')
 async def daemon_status(request: Request, req: DaemonStatusRequest = Depends()):
+    """
+    获取Scrapyd服务器守护进程状态
+    
+    Args:
+        request (Request): 请求对象
+        req (DaemonStatusRequest): 请求参数对象，依赖注入获取
+    
+    Returns:
+        dict: Scrapyd服务器守护进程状态
+    
+    """
     scrapyd_server_id = req.scrapydServerId
     scrapyd_server_row = ScrapydServerModel.get_by_id(scrapyd_server_id)
     client = get_client(scrapyd_server_row)
