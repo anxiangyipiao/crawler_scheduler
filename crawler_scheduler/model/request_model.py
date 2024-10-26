@@ -10,6 +10,12 @@ class LoginHistoryParams(BaseModel):
     size: Optional[int] = 20
 
 
+class LoginParams(BaseModel):
+    username: str
+    password: str
+
+
+
 # system_info_api 请求体模型
 class SystemDataRequest(BaseModel):
     scrapydServerId: int
