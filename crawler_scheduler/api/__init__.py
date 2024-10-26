@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
 
-from .ScrapydManager import ScrapydRouter
-from .User import UserRouter
-from ..schedule.Schedule import ScheduleRouter
+from .auth_api import auth_api
+from .scrapyd_api import scrapyd_api

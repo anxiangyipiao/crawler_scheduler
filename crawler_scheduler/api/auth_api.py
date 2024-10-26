@@ -10,12 +10,11 @@ from crawler_scheduler.service.auth_service import AuthService
 from crawler_scheduler.model.request_model import LoginHistoryParams
 
 
-User = FastAPI()
+auth_api = FastAPI()
 
 
 
-
-@User.post('/loginHistoryList')
+@auth_api.post('/loginHistoryList')
 def login_history_list(params: LoginHistoryParams = Depends()):
     page = params.page
     size = params.size
@@ -32,7 +31,7 @@ def login_history_list(params: LoginHistoryParams = Depends()):
 
 
 
-@User.post('/login')
+@auth_api.post('/login')
 @login_history_wrap
 async def login(request: Request):
     data = await request.json()
