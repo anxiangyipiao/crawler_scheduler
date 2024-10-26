@@ -8,6 +8,7 @@ from crawler_scheduler.model.base import BaseModel
 
 class StatsCollectionModel(BaseModel):
     """运行结果数据收集"""
+   
     id = AutoField(primary_key=True)
 
     scrapyd_server_id = IntegerField(default=0)

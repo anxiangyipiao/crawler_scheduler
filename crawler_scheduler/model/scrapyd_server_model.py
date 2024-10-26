@@ -10,8 +10,6 @@ from playhouse.shortcuts import model_to_dict
 from crawler_scheduler.model.base import BaseModel
 
 
-
-
 class ScrapydServerModel(BaseModel):
    
     id = IntegerField(primary_key=True)   #类型的主键，唯一标识每个 Scrapyd 服务器配置。
