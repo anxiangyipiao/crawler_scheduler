@@ -1,12 +1,17 @@
 # main.py
 
 from fastapi import FastAPI
-from api import router
+from api import ScrapydRouter
 
 app = FastAPI()
 
 # 包含 API 路由
-app.include_router(router)
+app.include_router(ScrapydRouter)
 
 # 启动 FastAPI 应用
 # 在命令行中运行： uvicorn main:app --reload
+
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=18000)

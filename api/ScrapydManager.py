@@ -5,10 +5,10 @@ from utils.datebases import RedisConnectionManager
 from model.model import ScrapydClienModel
 
 
-router = APIRouter()
+ScrapydRouter = APIRouter()
 
 # 上传 Scrapyd 地址到 Redis 的接口
-@router.post("/add_scrapyd_client")
+@ScrapydRouter.post("/add_scrapyd_client")
 def add_scrapyd_client(client: ScrapydClienModel):
     """
     上传 Scrapyd 客户端信息到 Redis。
