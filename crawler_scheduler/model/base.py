@@ -38,6 +38,6 @@ register_database(ReconnectMySQLDatabase, 'mysql')
 make_sqlite_dir(SCHEDULE_HISTORY_DATABASE_URL)
 db = connect(url=SCHEDULE_HISTORY_DATABASE_URL)
 
-class BaseModel(Model):
+class BaseModels(Model):
     class Meta:
         database = db

@@ -7,10 +7,10 @@ from datetime import datetime
 from peewee import CharField, IntegerField, DateTimeField
 from playhouse.shortcuts import model_to_dict
 
-from crawler_scheduler.model.base import BaseModel
+from crawler_scheduler.model.base import BaseModels
 
 
-class ScrapydServerModel(BaseModel):
+class ScrapydServerModel(BaseModels):
    
     id = IntegerField(primary_key=True)   #类型的主键，唯一标识每个 Scrapyd 服务器配置。
 

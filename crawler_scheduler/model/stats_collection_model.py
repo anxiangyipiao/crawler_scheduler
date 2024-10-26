@@ -3,10 +3,10 @@ from datetime import datetime
 
 from peewee import CharField, IntegerField, DateTimeField, AutoField
 
-from crawler_scheduler.model.base import BaseModel
+from crawler_scheduler.model.base import BaseModels
 
 
-class StatsCollectionModel(BaseModel):
+class StatsCollectionModel(BaseModels):
     """运行结果数据收集"""
    
     id = AutoField(primary_key=True)

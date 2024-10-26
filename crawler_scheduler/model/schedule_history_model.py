@@ -3,10 +3,10 @@ from datetime import datetime
 
 from peewee import CharField, IntegerField, DateTimeField, AutoField
 
-from crawler_scheduler.model.base import BaseModel
+from crawler_scheduler.model.base import BaseModels
 
 
-class ScheduleHistoryModel(BaseModel):
+class ScheduleHistoryModel(BaseModels):
     
     """调度历史存储"""
     id = AutoField(primary_key=True)
