@@ -6,22 +6,12 @@
 
 from fastapi import APIRouter, Request, Depends
 from fastapi.responses import Response
-from crawler_scheduler.service.auth_service import AuthService
 from crawler_scheduler.model.request_model import *
 from crawler_scheduler.model import ScrapydServerModel
 from crawler_scheduler.service.scrapyd_service import get_client, ScrapydService
 
 
 scrapyd_api = APIRouter()
-
-
-# 全局请求拦截器
-@scrapyd_api.middleware("http")
-def check_token(request: Request, call_next):
-    token = request.headers.get('Token')
-    AuthService.check_token(token)
-    response = call_next(request)
-    return response
 
 
 # 定义路由

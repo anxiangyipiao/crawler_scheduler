@@ -13,7 +13,6 @@ from crawler_scheduler.model.request_model import LoginHistoryParams
 auth_api = APIRouter()
 
 
-
 @auth_api.post('/loginHistoryList')
 def login_history_list(params: LoginHistoryParams = Depends()):
     page = params.page
@@ -30,15 +29,14 @@ def login_history_list(params: LoginHistoryParams = Depends()):
     }
 
 
-
 @auth_api.post('/login')
 @login_history_wrap
-async def login(request: Request):
-    data = await request.json()
+def login(request: Request):
+    data = request.json()
     username = data.get('username')
     password = data.get('password')
 
-    return await AuthService.login(
+    return AuthService.login(
         username=username,
         password=password
     )
