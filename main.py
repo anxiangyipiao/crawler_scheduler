@@ -1,7 +1,7 @@
 # main.py
 
 from fastapi import Depends, FastAPI,Request
-from crawler_scheduler.api import auth_api,scrapyd_api,system_api
+from crawler_scheduler.api import auth_api,scrapyd_api,system_info_api
 from fastapi.responses import JSONResponse
 from crawler_scheduler.service.auth_service import AuthService
 
@@ -20,6 +20,7 @@ def check_token(request: Request, call_next):
 # 包含 API 路由
 app.include_router(auth_api, tags=["auth_api"])
 app.include_router(scrapyd_api, tags=["scrapyd_api"], dependencies=[Depends(check_token)])
+app.include_router(system_info_api, tags=["system_info_api"], dependencies=[Depends(check_token)])
 
 
 # 启动 FastAPI 应用
