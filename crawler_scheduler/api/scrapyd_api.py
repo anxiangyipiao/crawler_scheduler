@@ -12,11 +12,11 @@ from crawler_scheduler.model import ScrapydServerModel
 from crawler_scheduler.service.scrapyd_service import get_client, ScrapydService
 
 
-scrapydApi = FastAPI()
+scrapyd_api = FastAPI()
 
 
 # 全局请求拦截器
-@scrapydApi.middleware("http")
+@scrapyd_api.middleware("http")
 async def check_token(request: Request, call_next):
     token = request.headers.get('Token')
     AuthService.check_token(token)
@@ -25,14 +25,14 @@ async def check_token(request: Request, call_next):
 
 
 # 定义路由
-@scrapydApi.post('/daemonStatus')
+@scrapyd_api.post('/daemonStatus')
 async def daemon_status(request: Request, req: DaemonStatusRequest = Depends()):
     scrapyd_server_id = req.scrapydServerId
     scrapyd_server_row = ScrapydServerModel.get_by_id(scrapyd_server_id)
     client = get_client(scrapyd_server_row)
     return client.daemon_status()
 
-@scrapydApi.post('/addVersion')
+@scrapyd_api.post('/addVersion')
 async def add_version(request: Request, req: AddVersionRequest = Depends()):
     egg = req.egg
     project = req.project
@@ -41,14 +41,14 @@ async def add_version(request: Request, req: AddVersionRequest = Depends()):
     client = get_client(scrapyd_server_row)
     return client.add_version(project, egg)
 
-@scrapydApi.post('/listProjects')
+@scrapyd_api.post('/listProjects')
 async def list_projects(request: Request, req: ListProjectsRequest = Depends()):
     scrapyd_server_id = req.scrapydServerId
     scrapyd_server_row = ScrapydServerModel.get_by_id(scrapyd_server_id)
     client = get_client(scrapyd_server_row)
     return client.list_projects()
 
-@scrapydApi.post('/listVersions')
+@scrapyd_api.post('/listVersions')
 async def list_versions(request: Request, req: ListVersionsRequest = Depends()):
     project = req.project
     scrapyd_server_id = req.scrapydServerId
@@ -56,7 +56,7 @@ async def list_versions(request: Request, req: ListVersionsRequest = Depends()):
     client = get_client(scrapyd_server_row)
     return client.list_versions_format(project=project)
 
-@scrapydApi.post('/listJobs')
+@scrapyd_api.post('/listJobs')
 async def list_jobs(request: Request, req: ListJobsRequest = Depends()):
     project = req.project
     scrapyd_server_id = req.scrapydServerId
@@ -64,7 +64,7 @@ async def list_jobs(request: Request, req: ListJobsRequest = Depends()):
     client = get_client(scrapyd_server_row)
     return client.list_jobs(project=project)
 
-@scrapydApi.post('/listJobsMerge')
+@scrapyd_api.post('/listJobsMerge')
 async def list_jobs_merge(request: Request, req: ListJobsMergeRequest = Depends()):
     project = req.project
     status = req.status
@@ -73,7 +73,7 @@ async def list_jobs_merge(request: Request, req: ListJobsMergeRequest = Depends(
     client = get_client(scrapyd_server_row)
     return client.list_jobs_merge(project=project, status=status)
 
-@scrapydApi.post('/cancel')
+@scrapyd_api.post('/cancel')
 async def cancel(request: Request, req: CancelRequest = Depends()):
     project = req.project
     job = req.job
@@ -82,7 +82,7 @@ async def cancel(request: Request, req: CancelRequest = Depends()):
     client = get_client(scrapyd_server_row)
     return client.cancel(project=project, job=job)
 
-@scrapydApi.post('/cancelAllJob')
+@scrapyd_api.post('/cancelAllJob')
 async def cancel_all_job(request: Request, req: CancelAllJobRequest = Depends()):
     project = req.project
     scrapyd_server_id = req.scrapydServerId
@@ -90,7 +90,7 @@ async def cancel_all_job(request: Request, req: CancelAllJobRequest = Depends())
     client = get_client(scrapyd_server_row)
     return client.cancel_all_job(project=project)
 
-@scrapydApi.post('/listSpiders')
+@scrapyd_api.post('/listSpiders')
 async def list_spiders(request: Request, req: ListSpidersRequest = Depends()):
     project = req.project
     scrapyd_server_id = req.scrapydServerId
@@ -98,7 +98,7 @@ async def list_spiders(request: Request, req: ListSpidersRequest = Depends()):
     client = get_client(scrapyd_server_row)
     return client.list_spiders(project=project)
 
-@scrapydApi.post('/schedule')
+@scrapyd_api.post('/schedule')
 async def schedule(request: Request, req: ScheduleRequest = Depends()):
     project = req.project
     spider = req.spider
@@ -114,7 +114,7 @@ async def schedule(request: Request, req: ScheduleRequest = Depends()):
     ScrapydService.run_spider(**kwargs)
     return {"status": "ok"}
 
-@scrapydApi.post('/deleteVersion')
+@scrapyd_api.post('/deleteVersion')
 async def delete_version(request: Request, req: DeleteVersionRequest = Depends()):
     project = req.project
     version = req.version
@@ -123,7 +123,7 @@ async def delete_version(request: Request, req: DeleteVersionRequest = Depends()
     client = get_client(scrapyd_server_row)
     return client.delete_version(project=project, version=version)
 
-@scrapydApi.post('/deleteProject')
+@scrapyd_api.post('/deleteProject')
 async def delete_project(request: Request, req: DeleteProjectRequest = Depends()):
     project = req.project
     scrapyd_server_id = req.scrapydServerId
@@ -131,14 +131,14 @@ async def delete_project(request: Request, req: DeleteProjectRequest = Depends()
     client = get_client(scrapyd_server_row)
     return client.delete_project(project=project)
 
-@scrapydApi.post('/logs')
+@scrapyd_api.post('/logs')
 async def logs(request: Request, req: LogsRequest = Depends()):
     scrapyd_server_id = req.scrapydServerId
     scrapyd_server_row = ScrapydServerModel.get_by_id(scrapyd_server_id)
     client = get_client(scrapyd_server_row)
     return client.logs()
 
-@scrapydApi.post('/projectLogs')
+@scrapyd_api.post('/projectLogs')
 async def project_logs(request: Request, req: ProjectLogsRequest = Depends()):
     project = req.project
     scrapyd_server_id = req.scrapydServerId
@@ -146,7 +146,7 @@ async def project_logs(request: Request, req: ProjectLogsRequest = Depends()):
     client = get_client(scrapyd_server_row)
     return client.project_logs(project=project)
 
-@scrapydApi.post('/spiderLogs')
+@scrapyd_api.post('/spiderLogs')
 async def spider_logs(request: Request, req: SpiderLogsRequest = Depends()):
     project = req.project
     spider = req.spider
@@ -155,7 +155,7 @@ async def spider_logs(request: Request, req: SpiderLogsRequest = Depends()):
     client = get_client(scrapyd_server_row)
     return client.spider_logs(project=project, spider=spider)
 
-@scrapydApi.post('/jobLog')
+@scrapyd_api.post('/jobLog')
 async def job_log(request: Request, req: JobLogRequest = Depends()):
     project = req.project
     spider = req.spider
