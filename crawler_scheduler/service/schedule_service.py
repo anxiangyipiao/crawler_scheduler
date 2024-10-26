@@ -125,7 +125,23 @@ class ScheduleService(object):
                      schedule_job_id=None,
                      scrapyd_server_id=None
                      ):
-        """调度日志列表"""
+        """
+        获取调度日志列表
+        
+        Args:
+            cls (type): 类类型，此参数用于类方法中的cls参数，此处无需手动传入
+            page (int, optional): 页码，默认为1。
+            size (int, optional): 每页显示的记录数，默认为20。
+            status (str, optional): 日志状态，默认为None，表示不筛选状态。可选值为'success'和'error'，分别表示成功和失败。
+            project (str, optional): 项目名称，默认为None，表示不筛选项目。
+            spider (str, optional): 爬虫名称，默认为None，表示不筛选爬虫。
+            schedule_job_id (str, optional): 调度任务ID，默认为None，表示不筛选调度任务ID。
+            scrapyd_server_id (str, optional): Scrapyd服务器ID，默认为None，表示不筛选Scrapyd服务器ID。
+        
+        Returns:
+            list: 包含日志信息的列表，每个元素是一个字典，包含调度日志的详细信息。
+        
+        """
 
         query = ScheduleHistoryModel.select()
 
@@ -156,8 +172,30 @@ class ScheduleService(object):
                                 spider=None,
                                 scrapyd_server_id=None,
                                 schedule_job_id=None):
-        """获取调度日志和运行日志"""
-
+        """
+        获取调度日志和运行日志。
+        
+        Args:
+            cls (type): 类类型，调用时传入。
+            page (int, optional): 页码，默认为1。
+            size (int, optional): 每页显示条数，默认为20。
+            status (str, optional): 日志状态，默认为None，表示所有状态。
+            project (str, optional): 项目名称，默认为None，表示所有项目。
+            spider (str, optional): Spider名称，默认为None，表示所有Spider。
+            scrapyd_server_id (int, optional): Scrapyd服务器ID，默认为None，表示所有Scrapyd服务器。
+            schedule_job_id (int, optional): 调度任务ID，默认为None，表示所有调度任务。
+        
+        Returns:
+            list: 包含调度日志和运行日志的列表，每个元素为字典类型，包含以下字段：
+                - spider_job_id (str): Spider任务ID。
+                - status (bool): 调度状态，True表示已调度，False表示未调度。
+                - schedule_mode (str): 调度模式，'自动'或'手动'。
+                - run_status (str): 运行状态，'finished'表示完成，'unknown'表示未知。
+                - item_count (int): Item总数，包括已丢弃和已抓取的Item数量。
+                - log_error_count (int): 错误日志数量。
+                - duration_str (str): 运行时间，格式为HH:MM:SS。
+        
+        """
         rows = cls.get_log_list(
             page=page, size=size, status=status,
             project=project, spider=spider,
