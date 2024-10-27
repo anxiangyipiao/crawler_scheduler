@@ -19,11 +19,11 @@ def check_token(request: Request, call_next):
 
 # 包含 API 路由
 app.include_router(auth_api, tags=["auth_api"])
-app.include_router(scrapyd_api, tags=["scrapyd_api"], dependencies=[Depends(check_token)])
-app.include_router(system_info_api, tags=["system_info_api"], dependencies=[Depends(check_token)])
-app.include_router(schedule_api, tags=["schedule_api"], dependencies=[Depends(check_token)])
-app.include_router(stats_collection_api, tags=["stats_collection_api"], dependencies=[Depends(check_token)])
-app.include_router(scrapyd_server_api, tags=["scrapyd_server_api"], dependencies=[Depends(check_token)])
+app.include_router(scrapyd_api, tags=["scrapyd_api"])
+app.include_router(system_info_api, tags=["system_info_api"])
+app.include_router(schedule_api, tags=["schedule_api"])
+app.include_router(stats_collection_api, tags=["stats_collection_api"])
+app.include_router(scrapyd_server_api, tags=["scrapyd_server_api"])
 
 
 
