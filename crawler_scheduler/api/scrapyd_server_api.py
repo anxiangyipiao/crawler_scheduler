@@ -11,9 +11,22 @@ from crawler_scheduler.model.request_model import AddScrapydServerRequest, Updat
 scrapyd_server_api = APIRouter()
 
 
-# 添加Scrapyd服务器
+
+
+# 添加swagger注释
 @scrapyd_server_api.post("/addScrapydServer")
 def add_scrapyd_server(req: AddScrapydServerRequest):
+    """
+    添加一个新的 Scrapyd 服务器。
+
+    - **server_url**: Scrapyd 服务器的 URL。
+    - **server_name**: Scrapyd 服务器的名称。
+    - **username**: Scrapyd 服务器的用户名。
+    - **password**: Scrapyd 服务器的密码。
+    - **status**: Scrapyd 服务器的状态（启用/禁用）。
+
+    返回一个消息表示操作成功。
+    """
     ScrapydServerModel.create(
         server_url=req.server_url,
         server_name=req.server_name,
