@@ -123,6 +123,22 @@ class ScrapydService(object):
         # 返回状态
         return status
 
+    def get_active_jobs_count(scrapyd_server_row):
+        
+        """
+        获取指定Scrapyd服务器上的活跃任务数。
+        
+        :param scrapyd_server_row: 包含Scrapyd服务器信息的对象
+        :return: 活跃任务的数量
+        """
+        
+        client = get_client(scrapyd_server_row)
+        jobs = client.list_jobs(scrapyd_server_row.project)  # 假设项目名已经存在于服务器行中
+        active_jobs = jobs['running'] + jobs['pending']
+        return len(active_jobs)
+
+
+
 
 if __name__ == '__main__':
     ScrapydService.run_spider(project='project', spider='baidu', schedule_job_id="xx")

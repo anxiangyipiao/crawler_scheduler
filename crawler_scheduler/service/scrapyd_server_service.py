@@ -40,3 +40,5 @@ def get_available_scrapyd_server_by_id(scrapyd_server_id):
         ScrapydServerModel.id == scrapyd_server_id,
         ScrapydServerModel.status == 1
     ).first()
+
+
