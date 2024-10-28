@@ -56,6 +56,17 @@ class ScrapydClient(ScrapydAPI):
     #####################################################
 
     def daemon_status(self):
+        """
+        获取守护进程状态，并增加返回参数total。
+        
+        Args:
+            无
+        
+        Returns:
+            dict: 包含守护进程状态的字典，增加了'total'字段，表示所有任务的总数，
+                其值为'pending'、'running'和'finished'字段值之和。
+        
+        """
         """增加了返回参数 total"""
         res = super().daemon_status()
         res["total"] = res["pending"] + res["running"] + res["finished"]
