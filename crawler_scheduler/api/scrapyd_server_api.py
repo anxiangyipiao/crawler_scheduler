@@ -76,6 +76,18 @@ def get_scrapyd_server(req: GetScrapydServerRequest):
 # 获取Scrapyd服务器分页信息
 @scrapyd_server_api.post("/getScrapydServerPage")
 def get_scrapyd_server_page():
+    """
+    获取Scrapyd服务器页面信息
+    
+    Args:
+        无
+    
+    Returns:
+        dict: 包含Scrapyd服务器列表和总数量的字典
+            - list: Scrapyd服务器列表，每个元素为一个Scrapyd服务器信息字典
+            - total: Scrapyd服务器总数量
+    
+    """
     lst = ScrapydServerModel.select()
     total = ScrapydServerModel.select().count()
     return {

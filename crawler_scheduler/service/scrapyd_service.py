@@ -64,7 +64,8 @@ class ScrapydService(object):
             # 如果是随机轮询，则获取可用的scrapyd服务器
             if schedule_type == ScheduleTypeEnum.RANDOM_SERVER:
                 # 随机轮询
-                scrapyd_server_row = scrapyd_server_service.get_available_scrapyd_server()
+                # scrapyd_server_row = scrapyd_server_service.get_available_scrapyd_server()
+                scrapyd_server_row = cls.get_min_active_jobs_scrapyd_server()
             # 如果是指定服务器，则根据scrapyd服务器ID获取可用的scrapyd服务器
             else:
                 # 指定服务器
@@ -123,7 +124,7 @@ class ScrapydService(object):
         # 返回状态
         return status
 
-    def get_active_jobs_count(scrapyd_server_row):
+    def get_active_jobs_count(self,scrapyd_server_row):
         
         """
         获取指定Scrapyd服务器上的活跃任务数。
@@ -131,12 +132,40 @@ class ScrapydService(object):
         :param scrapyd_server_row: 包含Scrapyd服务器信息的对象
         :return: 活跃任务的数量
         """
-        
+
         client = get_client(scrapyd_server_row)
         jobs = client.list_jobs(scrapyd_server_row.project)  # 假设项目名已经存在于服务器行中
         active_jobs = jobs['running'] + jobs['pending']
         return len(active_jobs)
 
+    # 获得所有scrapyd中最小的活跃任务数的scrapyd服务器
+    def get_min_active_jobs_scrapyd_server(self):
+        """
+        获取所有Scrapyd服务器中活跃任务最少的服务器。
+        
+        :return: 活跃任务最少的Scrapyd服务器
+        """
+
+        # 获取所有可用的Scrapyd服务器
+        scrapyd_servers = scrapyd_server_service.get_all_available_scrapyd_servers_list()
+
+        # 初始化活跃任务最少的Scrapyd服务器
+        min_active_jobs_scrapyd_server = None
+        min_active_jobs = float('inf')
+
+        # 遍历所有Scrapyd服务器
+        for scrapyd_server in scrapyd_servers:
+            # 获取活跃任务数
+            active_jobs = self.get_active_jobs_count(scrapyd_server)
+
+            # 如果活跃任务数小于最小值
+            if active_jobs < min_active_jobs:
+                # 更新最小值和最小值对应的Scrapyd服务器
+                min_active_jobs = active_jobs
+                min_active_jobs_scrapyd_server = scrapyd_server
+
+        # 返回活跃任务最少的Scrapyd服务器
+        return min_active_jobs_scrapyd_server
 
 
 
