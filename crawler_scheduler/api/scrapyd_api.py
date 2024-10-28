@@ -53,6 +53,9 @@ def add_version(request: Request, req: AddVersionRequest = Depends()):
     client = get_client(scrapyd_server_row)
     return client.add_version(project, egg)
 
+
+
+
 @scrapyd_api.post('/listProjects')
 def list_projects(request: Request, req: ListProjectsRequest = Depends()):
     """
