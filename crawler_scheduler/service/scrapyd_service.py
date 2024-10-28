@@ -42,9 +42,6 @@ class ScrapydService(object):
         project = kwargs['project']
         spider = kwargs['spider']
 
-        # 获取scrapyd服务器ID
-        scrapyd_server_id = kwargs['scrapyd_server_id']
-
         # 获取调度类型，默认为ONLY_ONE_SERVER
         schedule_type = kwargs.get('schedule_type') or ScheduleTypeEnum.ONLY_ONE_SERVER
 
@@ -70,7 +67,7 @@ class ScrapydService(object):
             else:
                 # 指定服务器
                 scrapyd_server_row = scrapyd_server_service.get_available_scrapyd_server_by_id(
-                    scrapyd_server_id=scrapyd_server_id
+                    scrapyd_server_id= kwargs['scrapyd_server_id']
                 )
 
             # 如果没有可用的scrapyd服务器，则抛出异常
