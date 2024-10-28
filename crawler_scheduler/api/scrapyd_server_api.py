@@ -12,7 +12,6 @@ scrapyd_server_api = APIRouter()
 
 
 
-
 # 添加swagger注释
 @scrapyd_server_api.post("/addScrapydServer")
 def add_scrapyd_server(req: AddScrapydServerRequest):
