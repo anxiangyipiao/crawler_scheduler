@@ -13,7 +13,7 @@ from crawler_scheduler.service.stats_collection_service import StatsCollectionSe
 from fastapi import APIRouter
 from crawler_scheduler.model.request_model import AddItemRequest, ListItemRequest, DeleteRequest
 
-stats_collection_api = APIRouter()
+stats_collection_api = APIRouter(prefix='/statsCollection')
 
 
 # 添加数据项

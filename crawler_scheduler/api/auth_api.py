@@ -10,7 +10,7 @@ from crawler_scheduler.service.auth_service import AuthService
 from crawler_scheduler.model.request_model import LoginHistoryParams,LoginParams
 
 
-auth_api = APIRouter()
+auth_api = APIRouter(prefix='/auth')
 
 
 @auth_api.post('/loginHistoryList')

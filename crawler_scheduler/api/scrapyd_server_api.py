@@ -8,7 +8,7 @@ from crawler_scheduler.model.scrapyd_server_model import ScrapydServerModel
 from fastapi import APIRouter
 from crawler_scheduler.model.request_model import AddScrapydServerRequest, UpdateScrapydServerRequest, UpdateScrapydServerStatusRequest, DeleteScrapydServerRequest, GetScrapydServerRequest
 
-scrapyd_server_api = APIRouter()
+scrapyd_server_api = APIRouter(prefix='/scrapydServer')
 
 
 

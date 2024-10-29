@@ -10,7 +10,7 @@ from crawler_scheduler.service.schedule_service import ScheduleService, schedule
 from crawler_scheduler.model.request_model import *
 
 
-schedule_api = APIRouter()
+schedule_api = APIRouter(prefix='/schedule')
 
 
 #########################

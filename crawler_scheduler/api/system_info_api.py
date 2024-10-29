@@ -7,7 +7,7 @@ from fastapi import APIRouter
 from crawler_scheduler.model.request_model import SystemDataRequest
 from crawler_scheduler.service.system_data_service import SystemDataService
 
-system_info_api = APIRouter()
+system_info_api = APIRouter(prefix='/system')
 
 
 # 系统信息接口

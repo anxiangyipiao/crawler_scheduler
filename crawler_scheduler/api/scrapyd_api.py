@@ -11,7 +11,7 @@ from crawler_scheduler.model import ScrapydServerModel
 from crawler_scheduler.service.scrapyd_service import get_client, ScrapydService
 
 
-scrapyd_api = APIRouter()
+scrapyd_api = APIRouter(prefix='/scrapyd')
 
 
 # 定义路由
