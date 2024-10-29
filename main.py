@@ -4,9 +4,19 @@ from fastapi import Depends, FastAPI,Request
 from crawler_scheduler.api import auth_api,scrapyd_api,system_info_api,schedule_api,stats_collection_api,scrapyd_server_api
 from fastapi.responses import JSONResponse
 from crawler_scheduler.service.auth_service import AuthService
-
+from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(default_response_class=JSONResponse)
+
+
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],  # 允许所有域名跨域
+    allow_credentials=True,
+    allow_methods=["*"],  # 允许所有方法
+    allow_headers=["*"],  # 允许所有头部
+)
 
 
 # 引入中间件
