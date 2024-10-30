@@ -8,9 +8,9 @@ from fastapi import APIRouter,Depends,Request
 from crawler_scheduler.service.action_history_service import ActionHistoryService,login_history_wrap
 from crawler_scheduler.service.auth_service import AuthService
 from crawler_scheduler.model.request_model import LoginHistoryParams,LoginParams
+from crawler_scheduler.utils.api_result import ApiResult
 
-
-auth_api = APIRouter(prefix='/auth')
+auth_api = APIRouter()
 
 
 @auth_api.post('/loginHistoryList')
@@ -35,8 +35,10 @@ def login(request: Request,user: LoginParams):
     username = user.username
     password = user.password
 
-    return AuthService.login(
+
+    return ApiResult.success(data=AuthService.login(
         username=username,
         password=password
-    )
+    ))
+
 

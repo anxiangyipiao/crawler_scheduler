@@ -33,7 +33,7 @@ def add_scrapyd_server(req: AddScrapydServerRequest):
         password=req.password,
         status=req.status
     )
-    return {"message": "Scrapyd服务器添加成功"}
+    # return {"message": "Scrapyd服务器添加成功"}
 
 # 更新Scrapyd服务器
 @scrapyd_server_api.post("/updateScrapydServer")
@@ -47,7 +47,7 @@ def update_scrapyd_server(req: UpdateScrapydServerRequest):
     ).where(
         ScrapydServerModel.id == req.scrapyd_server_id
     ).execute()
-    return {"message": "Scrapyd服务器更新成功"}
+    # return {"message": "Scrapyd服务器更新成功"}
 
 # 更新Scrapyd服务器状态
 @scrapyd_server_api.post("/updateScrapydServerStatus")
@@ -57,7 +57,7 @@ def update_scrapyd_server_status(req: UpdateScrapydServerStatusRequest):
     ).where(
         ScrapydServerModel.id == req.scrapyd_server_id
     ).execute()
-    return {"message": "Scrapyd服务器状态更新成功"}
+    # return {"message": "Scrapyd服务器状态更新成功"}
 
 # 删除Scrapyd服务器
 @scrapyd_server_api.post("/deleteScrapydServer")
@@ -65,7 +65,7 @@ def delete_scrapyd_server(req: DeleteScrapydServerRequest):
     ScrapydServerModel.delete().where(
         ScrapydServerModel.id == req.scrapyd_server_id
     ).execute()
-    return {"message": "Scrapyd服务器删除成功"}
+    # return {"message": "Scrapyd服务器删除成功"}
 
 # 获取Scrapyd服务器信息
 @scrapyd_server_api.post("/getScrapydServer")

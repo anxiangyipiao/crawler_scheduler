@@ -8,8 +8,6 @@ from fastapi.middleware.cors import CORSMiddleware
 
 app = FastAPI(default_response_class=JSONResponse)
 
-
-
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],  # 允许所有域名跨域
@@ -17,7 +15,6 @@ app.add_middleware(
     allow_methods=["*"],  # 允许所有方法
     allow_headers=["*"],  # 允许所有头部
 )
-
 
 # 引入中间件
 def check_token(request: Request, call_next):
@@ -28,7 +25,7 @@ def check_token(request: Request, call_next):
 
 
 # 包含 API 路由
-app.include_router(auth_api, tags=["auth_api"])
+app.include_router(auth_api, tags=["auth_api"],prefix='/auth')
 app.include_router(scrapyd_api, tags=["scrapyd_api"])
 app.include_router(system_info_api, tags=["system_info_api"])
 app.include_router(schedule_api, tags=["schedule_api"])
